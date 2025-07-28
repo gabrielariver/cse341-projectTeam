@@ -1,0 +1,23 @@
+{
+  "name": "cse341-projectteam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "joi": "^17.13.3",
+    "mongoose": "^8.16.5",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
