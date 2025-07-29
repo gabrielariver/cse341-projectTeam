@@ -22,9 +22,9 @@ const recipeSchema = new mongoose.Schema({
     enum: ['easy', 'medium', 'hard'],
     default: 'easy'
   },
-  userId: {
-    type: String,
-    required: true 
+  createdBy: {
+  type: String,
+    required: true
   }
 }, {
   timestamps: true 
