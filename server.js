@@ -32,16 +32,21 @@ const recipeRoutes = require('./routes/recipes');
 app.use('/api/recipes', recipeRoutes);
 
 const categoryRoutes = require('./routes/category');
-app.use('/api/category', categoryRoutes)
+app.use('/api/category', categoryRoutes);
 
+const userRoutes = require('./routes/users');
+app.use('/api/users', userRoutes);
 
-// logout
+// Home and logout views
 app.get('/', (req, res) => res.send('MyRecipe API is running'));
 app.get('/logged-out', (req, res) => res.send('<h2>You have been logged out.</h2><a href="/auth/github">Login again</a>'));
 
 // MongoDB connection
 const connectDB = require('./data/db'); 
 connectDB();
+
+// Swagger documentation
+require('./swagger')(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
