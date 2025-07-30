@@ -31,6 +31,8 @@ app.use('/auth', oauthRoutes);
 const recipeRoutes = require('./routes/recipes');
 app.use('/api/recipes', recipeRoutes);
 
+const categoryRoutes = require('./routes/category');
+app.use('/api/category', categoryRoutes)
 
 
 // logout
