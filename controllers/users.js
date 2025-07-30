@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-// GET
+// GET all users
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -10,18 +10,18 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// GET
-exports.getUserByUsername = async (req, res) => {
+// GET user by ID
+exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.status(200).json(user);
   } catch (err) {
-    res.status(400).json({ message: 'Invalid request' });
+    res.status(400).json({ message: 'Invalid ID format' });
   }
 };
 
-// POST
+// POST - create new user
 exports.createUser = async (req, res) => {
   try {
     const { username, email, fullName, role } = req.body;
@@ -43,14 +43,10 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// PUT
+// PUT user by ID
 exports.updateUser = async (req, res) => {
   try {
-    const updatedUser = await User.findOneAndUpdate(
-      { username: req.params.username },
-      req.body,
-      { new: true }
-    );
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedUser) return res.status(404).json({ message: 'User not found' });
     res.status(200).json(updatedUser);
   } catch (err) {
@@ -58,10 +54,10 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-// DELETE 
+// DELETE user by ID
 exports.deleteUser = async (req, res) => {
   try {
-    const deletedUser = await User.findOneAndDelete({ username: req.params.username });
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser) return res.status(404).json({ message: 'User not found' });
     res.status(200).json({ message: 'User deleted successfully' });
   } catch (err) {

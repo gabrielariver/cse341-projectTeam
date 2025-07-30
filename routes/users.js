@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/users');
-const { ensureAuth } = require('../middleware/ensureAuth');
+const recipeController = require('../controllers/users');
+const ensureAuth = require('../middleware/ensureAuth');
 
 
 router.get('/', userController.getAllUsers);
-router.get('/:username', userController.getUserByUsername);
+router.get('/:username', userController.getUserById );
 router.post('/', ensureAuth, userController.createUser);
 router.put('/:username', ensureAuth, userController.updateUser);
 router.delete('/:username', ensureAuth, userController.deleteUser);
