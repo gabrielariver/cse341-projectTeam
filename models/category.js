@@ -2,11 +2,14 @@ const { types, required } = require('joi');
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
-    name: {
-        types: String,
-        required: true
-    },
-    description: String
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Category', categorySchema);
