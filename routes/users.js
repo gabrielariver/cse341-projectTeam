@@ -5,9 +5,9 @@ const ensureAuth = require('../middleware/ensureAuth');
 
 
 router.get('/', userController.getAllUsers);
-router.get('/:username', userController.getUserById );
+router.get('/:id', userController.getUserById );
 router.post('/', ensureAuth, userController.createUser);
-router.put('/:username', ensureAuth, userController.updateUser);
-router.delete('/:username', ensureAuth, userController.deleteUser);
+router.put('/:id', ensureAuth, userController.updateUser);
+router.delete('/:id', ensureAuth, userController.deleteUser);
 
 module.exports = router;
