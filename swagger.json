@@ -175,7 +175,7 @@
       "items": { "type": "string" },
       "default": ["lasagna sheets", "ground beef", "tomato sauce", "onion", "béchamel", "cheese"]
     },
-    "instructions": {
+    "steps": {
       "type": "array",
       "items": { "type": "string" },
       "default": [
