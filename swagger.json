@@ -169,30 +169,37 @@
       "Recipe": {
         "type": "object",
         "properties": {
-          "title": { "type": "string" },
+          "title": { "type": "string", "default": "Lasagna Bolognese" },
           "ingredients": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": { "type": "string" },
+            "default": ["lasagna sheets", "ground beef", "tomato sauce", "onion", "béchamel", "cheese"]
           },
           "instructions": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": { "type": "string" },
+            "default": [
+              "Cook ground beef with onion and tomato sauce",
+              "Prepare béchamel sauce",
+              "Layer pasta, meat, and béchamel in a tray",
+              "Bake at 180°C for 35 minutes"
+            ]
           },
-          "prepTime": { "type": "integer" },
-          "difficulty": { "type": "string" },
-          "category": { "type": "string" },
-          "createdBy": { "type": "string" }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "username": { "type": "string" },
-          "email": { "type": "string" },
-          "fullName": { "type": "string" },
-          "role": { "type": "string" }
+          "prepTime": { "type": "integer", "default": 60 },
+          "difficulty": { "type": "string", "default": "hard" },
+          "category": { "type": "string", "default": "Lunch" },
+          "createdBy": { "type": "string", "default": "manuel.rojas" }
+          }
+        },
+        "User": {
+          "type": "object",
+          "properties": {
+            "username": { "type": "string", "default": "manuel.rojas" },
+            "email": { "type": "string", "default": "manuel.rojas@example.com" },
+            "fullName": { "type": "string", "default": "Manuel Alejandro Rojas Torres" },
+            "role": { "type": "string", "default": "user" }
+          }
         }
       }
     }
   }
-}
