@@ -21,33 +21,35 @@ exports.getRecipeById = async (req, res) => {
   }
 };
 
-// Create a new recipe (authenticated only)
+// POST Create a new recipe (authenticated only)
 exports.createRecipe = async (req, res) => {
   try {
-    const { title, ingredients, instructions, prepTime, difficulty, category } = req.body;
+    const { title, ingredients, steps, prepTime, difficulty, category } = req.body;
 
-    if (!title || !ingredients || !instructions || !prepTime) {
+    if (!title || !ingredients || !steps || !prepTime) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const newRecipe = new Recipe({
       title,
       ingredients,
-      instructions,
+      steps,
       prepTime,
       difficulty,
       category,
-      createdBy: req.user.username 
+      userId: req.user.id /
     });
 
     await newRecipe.save();
     res.status(201).json(newRecipe);
   } catch (err) {
+    console.error('Create recipe error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Update any recipe (only authenticated)
+
+// PUT Update any recipe (only authenticated)
 exports.updateRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findByIdAndUpdate(
