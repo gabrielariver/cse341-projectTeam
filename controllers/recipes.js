@@ -37,7 +37,7 @@ exports.createRecipe = async (req, res) => {
       prepTime,
       difficulty,
       category,
-      userId: req.user.id /
+      userId: req.user.id
     });
 
     await newRecipe.save();
@@ -47,6 +47,7 @@ exports.createRecipe = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 
 // PUT Update any recipe (only authenticated)
