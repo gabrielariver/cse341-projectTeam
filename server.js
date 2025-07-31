@@ -6,9 +6,14 @@ require('dotenv').config();
 require('./services/passport');
 
 const app = express();
-app.set('trust proxy', 1); 
+app.set('trust proxy', 1);
 
-app.use(cors());
+// CORS
+app.use(cors({
+  origin: 'https://cse341-projectteam.onrender.com',
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use(session({
@@ -37,15 +42,15 @@ app.use('/api/category', categoryRoutes);
 const userRoutes = require('./routes/users');
 app.use('/api/users', userRoutes);
 
-// Home and logout views
+// login y logout
 app.get('/', (req, res) => res.send('MyRecipe API is running'));
 app.get('/logged-out', (req, res) => res.send('<h2>You have been logged out.</h2><a href="/auth/github">Login again</a>'));
 
-// MongoDB connection
-const connectDB = require('./data/db'); 
+// MongoDB connection 
+const connectDB = require('./data/db');
 connectDB();
 
-// Swagger documentation
+//Swagger documentation
 require('./swagger')(app);
 
 const PORT = process.env.PORT || 3000;
