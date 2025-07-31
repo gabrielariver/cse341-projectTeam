@@ -167,30 +167,30 @@
   "components": {
     "schemas": {
       "Recipe": {
-        "type": "object",
-        "properties": {
-          "title": { "type": "string", "default": "Lasagna Bolognese" },
-          "ingredients": {
-            "type": "array",
-            "items": { "type": "string" },
-            "default": ["lasagna sheets", "ground beef", "tomato sauce", "onion", "béchamel", "cheese"]
-          },
-          "instructions": {
-            "type": "array",
-            "items": { "type": "string" },
-            "default": [
-              "Cook ground beef with onion and tomato sauce",
-              "Prepare béchamel sauce",
-              "Layer pasta, meat, and béchamel in a tray",
-              "Bake at 180°C for 35 minutes"
-            ]
-          },
-          "prepTime": { "type": "integer", "default": 60 },
-          "difficulty": { "type": "string", "default": "hard" },
-          "category": { "type": "string", "default": "Lunch" },
-          "createdBy": { "type": "string", "default": "manuel.rojas" }
-          }
-        },
+  "type": "object",
+  "properties": {
+    "title": { "type": "string", "default": "Lasagna Bolognese" },
+    "ingredients": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["lasagna sheets", "ground beef", "tomato sauce", "onion", "béchamel", "cheese"]
+    },
+    "instructions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [
+        "Cook ground beef with onion and tomato sauce",
+        "Prepare béchamel sauce",
+        "Layer pasta, meat, and béchamel in a tray",
+        "Bake at 180°C for 35 minutes"
+      ]
+    },
+    "prepTime": { "type": "integer", "default": 60 },
+    "difficulty": { "type": "string", "default": "hard" },
+    "category": { "type": "string", "default": "Lunch" }
+  }
+}
+,
         "User": {
           "type": "object",
           "properties": {
