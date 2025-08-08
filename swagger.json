@@ -336,17 +336,21 @@
       },
       "FavoriteInput": {
         "type": "object",
-        "required": ["recipeId", "userId"],
+        "required": ["recipeId"],
         "properties": {
-          "recipeId": { "type": "string", "example": "688a5f4936e232c11a993eff" },
-          "userId": { "type": "string", "example": "gabriela.rivera" }
+          "recipeId": { "type": "string", "example": "688a8f4936e232c11a993eff" }
         }
       },
       "Favorite": {
         "type": "object",
         "properties": {
           "_id": { "type": "string" },
-          "recipeId": { "type": "string" },
+          "recipeId": {
+            "oneOf": [
+              { "type": "string", "description": "ObjectId of Recipe" },
+              { "$ref": "#/components/schemas/Recipe" }
+            ]
+          },
           "userId": { "type": "string" },
           "addedAt": { "type": "string", "format": "date-time" }
         }
