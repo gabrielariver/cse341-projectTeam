@@ -1,19 +1,24 @@
 const mongoose = require('mongoose');
 
-const favoriteSchema = new mongoose.Schema({
-  recipeId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Recipe',
-    required: true
+const favoriteSchema = new mongoose.Schema(
+  {
+    recipeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recipe',
+      required: true
+    },
+    userId: {
+      type: String,
+      required: true
+    },
+    addedAt: {
+      type: Date,
+      default: Date.now
+    }
   },
-  userId: {
-    type: String,
-    required: true
-  },
-  addedAt: {
-    type: Date,
-    default: Date.now
+  {
+    collection: 'favorite'
   }
-});
+);
 
 module.exports = mongoose.model('Favorite', favoriteSchema);
