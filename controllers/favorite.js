@@ -1,14 +1,13 @@
-const mongoose = require('mongoose');
+ const mongoose = require('mongoose');
 const Favorite = require('../models/favorite');
 
-// GET all favorites 
-exports.getFavorites = async (req, res) => {
+// GET all favorites
+exports.getFavorites = async (_req, res) => {
   try {
-    const filter = req.user?.username ? { userId: req.user.username } : {};
-    const favorites = await Favorite.find(filter).populate('recipeId');
-    return res.status(200).json(favorites);
+    const favorites = await Favorite.find().populate('recipeId');
+    res.status(200).json(favorites);
   } catch {
-    return res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -19,61 +18,59 @@ exports.getFavoriteById = async (req, res) => {
     if (!mongoose.isValidObjectId(id)) {
       return res.status(400).json({ message: 'Invalid ID format' });
     }
-
-    const filter = { _id: id };
-    if (req.user?.username) filter.userId = req.user.username;
-
-    const favorite = await Favorite.findOne(filter).populate('recipeId');
+    const favorite = await Favorite.findById(id).populate('recipeId');
     if (!favorite) return res.status(404).json({ message: 'Favorite not found' });
-    return res.status(200).json(favorite);
+    res.status(200).json(favorite);
   } catch {
-    return res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// POST
+// POST create favorite
 exports.createFavorite = async (req, res) => {
   try {
-    const { recipeId } = req.body;
-    if (!recipeId) return res.status(400).json({ message: 'recipeId is required' });
-
-    const newFavorite = new Favorite({
-      recipeId,
-      userId: req.user.username
-    });
-
+    const { recipeId, userId } = req.body;
+    if (!recipeId || !userId) {
+      return res.status(400).json({ message: 'recipeId and userId are required' });
+    }
+    const newFavorite = new Favorite({ recipeId, userId });
     await newFavorite.save();
-    return res.status(201).json(newFavorite);
+    res.status(201).json(newFavorite);
   } catch {
-    return res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// PUT
+// PUT update favorite
 exports.updateFavorite = async (req, res) => {
   try {
-    const updated = await Favorite.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user.username },
-      req.body,
-      { new: true }
-    );
+    const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+    const update = {};
+    if (req.body.recipeId) update.recipeId = req.body.recipeId;
+    if (req.body.userId) update.userId = req.body.userId;
+
+    const updated = await Favorite.findByIdAndUpdate(id, update, { new: true });
     if (!updated) return res.status(404).json({ message: 'Favorite not found' });
-    return res.status(200).json(updated);
+    res.status(200).json(updated);
   } catch {
-    return res.status(400).json({ message: 'Invalid update' });
+    res.status(400).json({ message: 'Invalid update' });
   }
 };
 
-// DELETE
+// DELETE favorite recipe 
 exports.deleteFavorite = async (req, res) => {
   try {
-    const removed = await Favorite.findOneAndDelete({
-      _id: req.params.id,
-      userId: req.user.username
-    });
+    const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+    const removed = await Favorite.findByIdAndDelete(id);
     if (!removed) return res.status(404).json({ message: 'Favorite not found' });
-    return res.status(200).json({ message: 'Favorite removed' });
+    res.status(200).json({ message: 'Favorite removed' });
   } catch {
-    return res.status(400).json({ message: 'Invalid ID' });
+    res.status(400).json({ message: 'Invalid ID' });
   }
 };
