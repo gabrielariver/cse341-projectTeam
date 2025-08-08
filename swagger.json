@@ -231,7 +231,7 @@
         }
       }
     },
-    "/api/favorites/{id}": {
+    "/api/favorite/{id}": {
       "get": {
         "summary": "Get favorite by ID",
         "parameters": [
