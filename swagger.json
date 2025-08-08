@@ -198,7 +198,7 @@
       }
     },
 
-    "/api/favorites": {
+    "/api/favorite": {
       "get": {
         "summary": "Get all favorites",
         "responses": {
