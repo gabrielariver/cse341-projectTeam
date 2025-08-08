@@ -2,7 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config(); 
+require('./services/passport');
 require('./services/passport');
 
 const app = express();
@@ -36,11 +37,14 @@ app.use('/auth', oauthRoutes);
 const recipeRoutes = require('./routes/recipes');
 app.use('/api/recipes', recipeRoutes);
 
+const userRoutes = require('./routes/users');
+app.use('/api/users', userRoutes);
+
 const categoryRoutes = require('./routes/category');
 app.use('/api/category', categoryRoutes);
 
-const userRoutes = require('./routes/users');
-app.use('/api/users', userRoutes);
+const favoriteRoutes = require('./routes/favorite');
+app.use('/api/favorite', favoriteRoutes);
 
 // login y logout
 app.get('/', (req, res) => res.send('MyRecipe API is running'));
@@ -53,5 +57,10 @@ connectDB();
 //Swagger documentation
 require('./swagger')(app);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+// Solo iniciar el servidor si este archivo es ejecutado directamente
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app; 

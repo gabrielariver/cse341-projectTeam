@@ -6,13 +6,14 @@ const favoriteSchema = new mongoose.Schema({
     ref: 'Recipe',
     required: true
   },
-  user: {
-    type: String, 
+  userId: {
+    type: String,
     required: true
+  },
+  addedAt: {
+    type: Date,
+    default: Date.now
   }
-}, {
-  timestamps: true
 });
 
-const Favorite = mongoose.model('Favorite', favoriteSchema);
-module.exports = Favorite;
+module.exports = mongoose.model('Favorite', favoriteSchema);
