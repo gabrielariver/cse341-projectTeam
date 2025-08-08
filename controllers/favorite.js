@@ -1,4 +1,3 @@
-// controllers/favorite.js
 const mongoose = require('mongoose');
 const Favorite = require('../models/favorite');
 
@@ -8,7 +7,7 @@ exports.getFavorites = async (req, res) => {
     const filter = req.user?.username ? { userId: req.user.username } : {};
     const favorites = await Favorite.find(filter).populate('recipeId');
     return res.status(200).json(favorites);
-  } catch (err) {
+  } catch {
     return res.status(500).json({ message: 'Server error' });
   }
 };
@@ -26,23 +25,17 @@ exports.getFavoriteById = async (req, res) => {
 
     const favorite = await Favorite.findOne(filter).populate('recipeId');
     if (!favorite) return res.status(404).json({ message: 'Favorite not found' });
-
     return res.status(200).json(favorite);
-  } catch (err) {
+  } catch {
     return res.status(500).json({ message: 'Server error' });
   }
 };
 
-// POST: Add a recipe to favorites
+// POST
 exports.createFavorite = async (req, res) => {
   try {
     const { recipeId } = req.body;
-    if (!recipeId || !mongoose.isValidObjectId(recipeId)) {
-      return res.status(400).json({ message: 'Valid recipeId is required' });
-    }
-    if (!req.user?.username) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
+    if (!recipeId) return res.status(400).json({ message: 'recipeId is required' });
 
     const newFavorite = new Favorite({
       recipeId,
@@ -51,48 +44,36 @@ exports.createFavorite = async (req, res) => {
 
     await newFavorite.save();
     return res.status(201).json(newFavorite);
-  } catch (err) {
+  } catch {
     return res.status(500).json({ message: 'Server error' });
   }
 };
 
-// PUT: Update a favorite
+// PUT
 exports.updateFavorite = async (req, res) => {
   try {
-    if (!req.user?.username) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
     const updated = await Favorite.findOneAndUpdate(
       { _id: req.params.id, userId: req.user.username },
       req.body,
       { new: true }
     );
-
     if (!updated) return res.status(404).json({ message: 'Favorite not found' });
-
     return res.status(200).json(updated);
-  } catch (err) {
+  } catch {
     return res.status(400).json({ message: 'Invalid update' });
   }
 };
 
-// DELETE favorite
+// DELETE
 exports.deleteFavorite = async (req, res) => {
   try {
-    if (!req.user?.username) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
     const removed = await Favorite.findOneAndDelete({
       _id: req.params.id,
       userId: req.user.username
     });
-
     if (!removed) return res.status(404).json({ message: 'Favorite not found' });
-
     return res.status(200).json({ message: 'Favorite removed' });
-  } catch (err) {
+  } catch {
     return res.status(400).json({ message: 'Invalid ID' });
   }
 };
