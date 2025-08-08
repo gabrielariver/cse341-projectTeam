@@ -15,7 +15,11 @@
         "responses": {
           "200": {
             "description": "List of all recipes",
-            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Recipe" } } } }
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Recipe" } }
+              }
+            }
           }
         }
       },
@@ -24,7 +28,11 @@
         "security": [ { "cookieAuth": [] } ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Recipe" } } }
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Recipe" }
+            }
+          }
         },
         "responses": {
           "201": { "description": "Recipe created" },
@@ -39,7 +47,10 @@
           { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": { "description": "Recipe found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Recipe" } } } },
+          "200": {
+            "description": "Recipe found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Recipe" } } }
+          },
           "404": { "description": "Not found" }
         }
       },
@@ -78,7 +89,11 @@
         "responses": {
           "200": {
             "description": "List of users",
-            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/User" } } } }
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/User" } }
+              }
+            }
           }
         }
       },
@@ -87,7 +102,11 @@
         "security": [ { "cookieAuth": [] } ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } }
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/User" }
+            }
+          }
         },
         "responses": {
           "201": { "description": "User created" },
@@ -102,7 +121,10 @@
           { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": { "description": "User found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } } },
+          "200": {
+            "description": "User found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } }
+          },
           "404": { "description": "User not found" }
         }
       },
@@ -141,7 +163,11 @@
         "responses": {
           "200": {
             "description": "List of categories",
-            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Category" } } } }
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Category" } }
+              }
+            }
           }
         }
       },
@@ -150,7 +176,11 @@
         "security": [ { "cookieAuth": [] } ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Category" } } }
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CategoryInput" }
+            }
+          }
         },
         "responses": {
           "201": { "description": "Category created" },
@@ -165,7 +195,10 @@
           { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": { "description": "Category found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Category" } } } },
+          "200": {
+            "description": "Category found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Category" } } }
+          },
           "404": { "description": "Not found" }
         }
       },
@@ -177,7 +210,11 @@
         ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Category" } } }
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CategoryInput" }
+            }
+          }
         },
         "responses": {
           "200": { "description": "Category updated" },
@@ -204,7 +241,11 @@
         "responses": {
           "200": {
             "description": "List of favorites",
-            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Favorite" } } } }
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Favorite" } }
+              }
+            }
           }
         }
       },
@@ -215,13 +256,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["recipeId"],
-                "properties": {
-                  "recipeId": { "type": "string", "example": "688a5f4936e232c11a993eff" }
-                }
-              }
+              "schema": { "$ref": "#/components/schemas/FavoriteInput" }
             }
           }
         },
@@ -238,7 +273,10 @@
           { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": { "description": "Favorite found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Favorite" } } } },
+          "200": {
+            "description": "Favorite found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Favorite" } } }
+          },
           "404": { "description": "Not found" }
         }
       },
@@ -252,12 +290,7 @@
           "required": false,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "recipeId": { "type": "string", "example": "688a5f4936e232c11a993eff" }
-                }
-              }
+              "schema": { "$ref": "#/components/schemas/FavoriteInput" }
             }
           }
         },
@@ -282,13 +315,41 @@
   },
   "components": {
     "securitySchemes": {
-      "cookieAuth": {
-        "type": "apiKey",
-        "in": "cookie",
-        "name": "connect.sid"
-      }
+      "cookieAuth": { "type": "apiKey", "in": "cookie", "name": "connect.sid" }
     },
     "schemas": {
+      "CategoryInput": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": { "type": "string", "example": "Desserts" },
+          "description": { "type": "string", "example": "Sweet dishes and baked goods" }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      },
+      "FavoriteInput": {
+        "type": "object",
+        "required": ["recipeId"],
+        "properties": {
+          "recipeId": { "type": "string", "example": "688a5f4936e232c11a993eff" }
+        }
+      },
+      "Favorite": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "recipeId": { "type": "string" },
+          "userId": { "type": "string" },
+          "addedAt": { "type": "string", "format": "date-time" }
+        }
+      },
       "Recipe": {
         "type": "object",
         "properties": {
@@ -313,25 +374,6 @@
           "role": { "type": "string", "example": "user" }
         },
         "required": ["username", "email"]
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "_id": { "type": "string" },
-          "name": { "type": "string", "example": "Desserts" },
-          "description": { "type": "string", "example": "Sweet dishes and baked goods" }
-        },
-        "required": ["name", "description"]
-      },
-      "Favorite": {
-        "type": "object",
-        "properties": {
-          "_id": { "type": "string" },
-          "recipeId": { "type": "string", "example": "688a5f4936e232c11a993eff" },
-          "userId": { "type": "string", "example": "gabriela.rivera" },
-          "addedAt": { "type": "string", "format": "date-time" }
-        },
-        "required": ["recipeId", "userId"]
       }
     }
   }
