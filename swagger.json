@@ -336,9 +336,10 @@
       },
       "FavoriteInput": {
         "type": "object",
-        "required": ["recipeId"],
+        "required": ["recipeId", "userId"],
         "properties": {
-          "recipeId": { "type": "string", "example": "688a5f4936e232c11a993eff" }
+          "recipeId": { "type": "string", "example": "688a5f4936e232c11a993eff" },
+          "userId": { "type": "string", "example": "gabriela.rivera" }
         }
       },
       "Favorite": {
