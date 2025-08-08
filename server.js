@@ -4,7 +4,6 @@ const passport = require('passport');
 const cors = require('cors');
 require('dotenv').config(); 
 require('./services/passport');
-require('./services/passport');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -57,7 +56,6 @@ connectDB();
 //Swagger documentation
 require('./swagger')(app);
 
-// Solo iniciar el servidor si este archivo es ejecutado directamente
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

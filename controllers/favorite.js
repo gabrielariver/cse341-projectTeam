@@ -1,17 +1,19 @@
+// controllers/favorite.js
+const mongoose = require('mongoose');
 const Favorite = require('../models/favorite');
 
-// GET all favorites
+// GET all favorites 
 exports.getFavorites = async (req, res) => {
   try {
-    const filter = req.user?.username ? { user: req.user.username } : {};
-    const favorites = await Favorite.find(filter).populate('recipe');
+    const filter = req.user?.username ? { userId: req.user.username } : {};
+    const favorites = await Favorite.find(filter).populate('recipeId');
     return res.status(200).json(favorites);
   } catch (err) {
     return res.status(500).json({ message: 'Server error' });
   }
 };
 
-// GET favorite by ID 
+// GET favorite by ID
 exports.getFavoriteById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -20,9 +22,9 @@ exports.getFavoriteById = async (req, res) => {
     }
 
     const filter = { _id: id };
-    if (req.user?.username) filter.user = req.user.username;
+    if (req.user?.username) filter.userId = req.user.username;
 
-    const favorite = await Favorite.findOne(filter).populate('recipe');
+    const favorite = await Favorite.findOne(filter).populate('recipeId');
     if (!favorite) return res.status(404).json({ message: 'Favorite not found' });
 
     return res.status(200).json(favorite);
@@ -31,64 +33,66 @@ exports.getFavoriteById = async (req, res) => {
   }
 };
 
-
 // POST: Add a recipe to favorites
 exports.createFavorite = async (req, res) => {
   try {
-    const { recipe } = req.body;
-
-    if (!recipe) {
-      return res.status(400).json({ message: 'Recipe ID is required' });
+    const { recipeId } = req.body;
+    if (!recipeId || !mongoose.isValidObjectId(recipeId)) {
+      return res.status(400).json({ message: 'Valid recipeId is required' });
+    }
+    if (!req.user?.username) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
 
     const newFavorite = new Favorite({
-      recipe,
-      user: req.user.username
+      recipeId,
+      userId: req.user.username
     });
 
     await newFavorite.save();
-    res.status(201).json(newFavorite);
+    return res.status(201).json(newFavorite);
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: 'Server error' });
   }
 };
 
 // PUT: Update a favorite
 exports.updateFavorite = async (req, res) => {
   try {
+    if (!req.user?.username) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
     const updated = await Favorite.findOneAndUpdate(
-      {
-        _id: req.params.id,
-        user: req.user.username
-      },
+      { _id: req.params.id, userId: req.user.username },
       req.body,
       { new: true }
     );
 
-    if (!updated) {
-      return res.status(404).json({ message: 'Favorite not found' });
-    }
+    if (!updated) return res.status(404).json({ message: 'Favorite not found' });
 
-    res.status(200).json(updated);
+    return res.status(200).json(updated);
   } catch (err) {
-    res.status(400).json({ message: 'Invalid update' });
+    return res.status(400).json({ message: 'Invalid update' });
   }
 };
 
-// DELETE favorite 
+// DELETE favorite
 exports.deleteFavorite = async (req, res) => {
   try {
-    const removed = await Favorite.findOneAndDelete({
-      _id: req.params.id,
-      user: req.user.username
-    });
-
-    if (!removed) {
-      return res.status(404).json({ message: 'Favorite not found' });
+    if (!req.user?.username) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    res.status(200).json({ message: 'Favorite removed' });
+    const removed = await Favorite.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user.username
+    });
+
+    if (!removed) return res.status(404).json({ message: 'Favorite not found' });
+
+    return res.status(200).json({ message: 'Favorite removed' });
   } catch (err) {
-    res.status(400).json({ message: 'Invalid ID' });
+    return res.status(400).json({ message: 'Invalid ID' });
   }
 };
